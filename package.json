@@ -5,6 +5,9 @@
   "repository": "",
   "author": "",
   "license": "MIT",
+  "scripts": {
+    "test": "npx hardhat test"
+  },
   "dependencies": {
     "hardhat": "^2.6.4",
     "hardhat-watcher": "^2.1.1",
