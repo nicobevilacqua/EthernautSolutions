@@ -5,7 +5,7 @@ import { ethers } from 'hardhat';
 
 const { provider } = ethers;
 
-describe('Elevator', () => {
+describe('GatekeeperOneAttacker', () => {
   let owner: SignerWithAddress;
   let user1: SignerWithAddress;
   let user2: SignerWithAddress;

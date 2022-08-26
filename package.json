@@ -9,6 +9,7 @@
     "test": "npx hardhat test"
   },
   "dependencies": {
+    "@openzeppelin/contracts": "3.0.0",
     "hardhat": "^2.6.4",
     "hardhat-watcher": "^2.1.1",
     "ts-node": "^10.2.1",

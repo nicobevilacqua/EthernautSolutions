@@ -11,7 +11,7 @@ const dataInBytes = [
   utils.formatBytes32String('password3password3password3'),
 ];
 
-describe('Elevator', () => {
+describe('Privacy', () => {
   let owner: SignerWithAddress;
   let user1: SignerWithAddress;
   let user2: SignerWithAddress;

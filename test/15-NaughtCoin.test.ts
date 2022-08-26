@@ -3,9 +3,7 @@ import { expect } from 'chai';
 import { Contract, utils } from 'ethers';
 import { ethers } from 'hardhat';
 
-const { provider } = ethers;
-
-describe('GatekeeperTwoAttacker', () => {
+describe('NaughtCoin', () => {
   let owner: SignerWithAddress;
   let user1: SignerWithAddress;
   let user2: SignerWithAddress;
@@ -14,16 +12,20 @@ describe('GatekeeperTwoAttacker', () => {
   before(async () => {
     [owner, user1, user2, attacker] = await ethers.getSigners();
 
-    const Factory = await ethers.getContractFactory('GatekeeperTwo');
-    contract = await Factory.deploy();
+    const Factory = await ethers.getContractFactory('NaughtCoin');
+    contract = await Factory.deploy(owner.address);
     await contract.deployed();
   });
 
   it('attack', async () => {
-    const AttackerFactory = await ethers.getContractFactory('GatekeeperTwoAttacker');
-    const attackerContract = await AttackerFactory.connect(attacker).deploy(contract.address);
-    await attackerContract.deployed();
+    const amount = await contract.balanceOf(owner.address);
 
-    expect(await contract.entrant()).to.equal(attacker.address);
+    let tx = await contract.approve(attacker.address, amount);
+    await tx.wait();
+
+    tx = await contract.connect(attacker).transferFrom(owner.address, attacker.address, amount);
+    await tx.wait();
+
+    expect(await contract.balanceOf(owner.address)).to.equal(0);
   });
 });

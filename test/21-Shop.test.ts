@@ -1,11 +1,9 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
-import { Contract, utils } from 'ethers';
+import { Contract } from 'ethers';
 import { ethers } from 'hardhat';
 
-const { provider } = ethers;
-
-describe('GatekeeperTwoAttacker', () => {
+describe('Shop', () => {
   let owner: SignerWithAddress;
   let user1: SignerWithAddress;
   let user2: SignerWithAddress;
@@ -14,16 +12,20 @@ describe('GatekeeperTwoAttacker', () => {
   before(async () => {
     [owner, user1, user2, attacker] = await ethers.getSigners();
 
-    const Factory = await ethers.getContractFactory('GatekeeperTwo');
-    contract = await Factory.deploy();
+    const Factory = await ethers.getContractFactory('Shop');
+    contract = await Factory.connect(owner).deploy();
     await contract.deployed();
   });
 
   it('attack', async () => {
-    const AttackerFactory = await ethers.getContractFactory('GatekeeperTwoAttacker');
+    const AttackerFactory = await ethers.getContractFactory('ShopAttacker');
     const attackerContract = await AttackerFactory.connect(attacker).deploy(contract.address);
     await attackerContract.deployed();
 
-    expect(await contract.entrant()).to.equal(attacker.address);
+    const tx = await attackerContract.attack();
+    await tx.wait();
+
+    expect(await contract.isSold()).to.be.true;
+    expect(await contract.price()).to.equal(0);
   });
 });
