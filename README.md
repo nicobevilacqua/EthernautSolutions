@@ -1,42 +1,43 @@
-# Advanced Sample Hardhat Project
+# Ethernaut Solutions
 
-This project demonstrates an advanced Hardhat use case, integrating other tools commonly used alongside Hardhat in the ecosystem.
+## Index
+1. Hello Ethernaut
+2. Fallback
+3. Fallout
+4. CoinFlip
+5. Telephone
+6. Delegation
+7. Force
+8. Vault
+9. King
+10. Reentrance
+11. Elevator
+12. Privacy
+13. Gatekeeper One
+14. Gatekeeper Two
+15. Naught Coin
+16. Preservation
+17. Recovery
+18. Magic Number
+19. Alien Codex
+20. Denial
+21. Shop
+22. Dex One
+23. Dex Two
+24. Puzzle Wallet
+25. Motorbike
+26. Double Entry Point
 
-The project comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts. It also comes with a variety of other tools, preconfigured to work with the project code.
 
-Try running some of the following tasks:
+## 25 - Motorbike
 
-```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-npx hardhat help
-REPORT_GAS=true npx hardhat test
-npx hardhat coverage
-npx hardhat run scripts/deploy.js
-node scripts/deploy.js
-npx eslint '**/*.js'
-npx eslint '**/*.js' --fix
-npx prettier '**/*.{json,sol,md}' --check
-npx prettier '**/*.{json,sol,md}' --write
-npx solhint 'contracts/**/*.sol'
-npx solhint 'contracts/**/*.sol' --fix
-```
+Ethernaut's motorbike has a brand new upgradeable engine design.
 
-# Etherscan verification
+Would you be able to ```selfdestruct``` its engine and make the motorbike unusable ?
 
-To try out Etherscan verification, you first need to deploy a contract to an Ethereum network that's supported by Etherscan, such as Ropsten.
+Things that might help:
 
-In this project, copy the .env.template file to a file named .env, and then edit it to fill in the details. Enter your Etherscan API key, your Ropsten node URL (eg from Alchemy), and the private key of the account which will send the deployment transaction. With a valid .env file in place, first deploy your contract:
-
-```shell
-hardhat run --network ropsten scripts/deploy.js
-```
-
-Then, copy the deployment address and paste it in to replace `DEPLOYED_CONTRACT_ADDRESS` in this command:
-
-```shell
-npx hardhat verify --network ropsten DEPLOYED_CONTRACT_ADDRESS "Hello, Hardhat!"
-```
+* [EIP-1967](https://eips.ethereum.org/EIPS/eip-1967)
+* [UUPS](https://forum.openzeppelin.com/t/uups-proxies-tutorial-solidity-javascript/7786) upgradeable pattern
+* [Initializable](https://github.com/OpenZeppelin/openzeppelin-upgrades/blob/master/packages/core/contracts/Initializable.sol
+) contract
