@@ -13,8 +13,6 @@ on:
     paths:
     - 'contracts/challenges/02-Fallback.sol'
     - 'test/02-Fallback.test.ts'
-
-env:
   
 jobs:
   start-hardhat-node:
