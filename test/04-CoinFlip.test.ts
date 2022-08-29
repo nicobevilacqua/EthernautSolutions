@@ -13,9 +13,23 @@ describe('CoinFlip', () => {
   let contract: Contract;
   before(async () => {
     [owner, user1, user2, attacker] = await ethers.getSigners();
+    const Factory = await ethers.getContractFactory('CoinFlip');
+    contract = await Factory.deploy();
+    await contract.deployed();
   });
 
   it('attack', async () => {
-    expect(true).to.equal(false);
+    const AttackFactory = await ethers.getContractFactory('CoinFlipAttacker');
+    const attackerContract = await AttackFactory.connect(attacker).deploy(
+      contract.address
+    );
+    await attackerContract.deployed();
+
+    for (let i = 0; i < 10; i++) {
+      const tx = await attackerContract.connect(attacker).attack();
+      await tx.wait();
+    }
+
+    expect(await contract.consecutiveWins()).to.equal(10);
   });
 });

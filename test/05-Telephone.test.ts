@@ -13,9 +13,23 @@ describe('Telephone', () => {
   let contract: Contract;
   before(async () => {
     [owner, user1, user2, attacker] = await ethers.getSigners();
+    const Factory = await ethers.getContractFactory('Telephone');
+    contract = await Factory.deploy();
+    await contract.deployed();
   });
 
   it('attack', async () => {
-    expect(true).to.equal(false);
+    const AttackerFactory = await ethers.getContractFactory(
+      'TelephoneAttacker'
+    );
+    const attackerContract = await AttackerFactory.connect(attacker).deploy(
+      contract.address
+    );
+    await attackerContract.deployed();
+
+    const tx = await attackerContract.connect(attacker).attack();
+    await tx.wait();
+
+    expect(await contract.owner()).to.equal(attacker.address);
   });
 });
