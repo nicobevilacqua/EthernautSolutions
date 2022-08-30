@@ -6,6 +6,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+import "hardhat/console.sol";
+
 contract Dex is Ownable {
     using SafeMath for uint256;
     address public token1;
@@ -39,6 +41,9 @@ contract Dex is Ownable {
             IERC20(from).balanceOf(msg.sender) >= amount,
             "Not enough to swap"
         );
+
+        console.log(from, to, amount);
+
         uint256 swapAmount = getSwapPrice(from, to, amount);
         IERC20(from).transferFrom(msg.sender, address(this), amount);
         IERC20(to).approve(address(this), swapAmount);

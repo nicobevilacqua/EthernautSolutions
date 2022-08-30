@@ -34,6 +34,7 @@ describe('Denial', () => {
     await tx.wait();
 
     tx = contract.connect(owner).withdraw({ gasLimit: 1000000 });
+    // out of gas
     await expect(tx).to.be.rejectedWith(Error);
   });
 });
