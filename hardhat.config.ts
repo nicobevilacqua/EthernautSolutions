@@ -1,8 +1,8 @@
+import '@nomicfoundation/hardhat-toolbox';
 import { config } from 'dotenv';
 config();
 
 import '@nomiclabs/hardhat-etherscan';
-import '@nomiclabs/hardhat-waffle';
 import 'hardhat-gas-reporter';
 import 'solidity-coverage';
 import 'hardhat-watcher';
@@ -46,17 +46,20 @@ export default {
 
     rinkeby: {
       url: process.env.RPC_RINKEBY || '',
-      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
 
     goerli: {
       url: process.env.RPC_GOERLI || '',
-      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
 
     ropsten: {
       url: process.env.RPC_ROPSTEN || '',
-      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
   },
 
@@ -65,7 +68,9 @@ export default {
     gasPrice: process.env.GAS_PRICE,
     coinmarketcap: process.env.CMC_KEY,
     currency: 'USD',
-    outputFile: process.env.TO_FILE ? path.resolve(__dirname, 'gasReporterOutput.json') : undefined,
+    outputFile: process.env.TO_FILE
+      ? path.resolve(__dirname, 'gasReporterOutput.json')
+      : undefined,
   },
 
   watcher: {

