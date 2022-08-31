@@ -7,14 +7,14 @@ const { provider } = ethers;
 
 describe('Preservation', () => {
   let owner: SignerWithAddress;
-  let user1: SignerWithAddress;
-  let user2: SignerWithAddress;
   let attacker: SignerWithAddress;
   let contract: Contract;
   before(async () => {
-    [owner, user1, user2, attacker] = await ethers.getSigners();
+    [owner, attacker] = await ethers.getSigners();
 
-    const LibraryContractFactory = await ethers.getContractFactory('LibraryContract');
+    const LibraryContractFactory = await ethers.getContractFactory(
+      'LibraryContract'
+    );
 
     const [library1, library2] = await Promise.all([
       LibraryContractFactory.deploy(),
@@ -29,12 +29,16 @@ describe('Preservation', () => {
   });
 
   it('attack', async () => {
-    const AttackerFactory = await ethers.getContractFactory('PreservationAttacker');
+    const AttackerFactory = await ethers.getContractFactory(
+      'PreservationAttacker'
+    );
     const attackerContract = await AttackerFactory.deploy();
     await attackerContract.deployed();
 
     let tx;
-    tx = await contract.connect(attacker).setFirstTime(attackerContract.address);
+    tx = await contract
+      .connect(attacker)
+      .setFirstTime(attackerContract.address);
     await tx.wait();
 
     let library1 = await provider.getStorageAt(contract.address, 0);

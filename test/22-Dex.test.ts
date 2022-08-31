@@ -72,7 +72,7 @@ describe('Dex', () => {
       amount = attackerFromBalance;
     }
 
-    console.log('amount', utils.formatEther(amount));
+    // console.log('amount', utils.formatEther(amount));
 
     const tx = await dex
       .connect(attacker)
@@ -93,11 +93,13 @@ describe('Dex', () => {
     ]);
 
     while (!dexToken1Balance.eq(0) && !dexToken2Balance.eq(0)) {
+      /*
       console.log(
         'dex balance',
         utils.formatEther(dexToken1Balance),
         utils.formatEther(dexToken2Balance)
       );
+      */
 
       await doMaxTransfer(token1, token2);
 
@@ -112,15 +114,15 @@ describe('Dex', () => {
         token2.balanceOf(dex.address),
       ]);
 
-      const [attackerToken1Balance, attackerToken2Balance] = await Promise.all([
-        token1.balanceOf(attacker.address),
-        token2.balanceOf(attacker.address),
-      ]);
-      console.log(
-        'attacker balance',
-        utils.formatEther(attackerToken1Balance),
-        utils.formatEther(attackerToken2Balance)
-      );
+      // const [attackerToken1Balance, attackerToken2Balance] = await Promise.all([
+      //   token1.balanceOf(attacker.address),
+      //   token2.balanceOf(attacker.address),
+      // ]);
+      // console.log(
+      //   'attacker balance',
+      //   utils.formatEther(attackerToken1Balance),
+      //   utils.formatEther(attackerToken2Balance)
+      // );
     }
 
     expect(dexToken1Balance.eq(0) || dexToken2Balance.eq(0)).to.be.true;
