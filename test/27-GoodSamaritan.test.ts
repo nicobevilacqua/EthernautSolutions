@@ -41,7 +41,6 @@ describe('GoodSamaritan', () => {
     await tx.wait();
 
     const walletBalance = await coin.balances(walletAddress);
-    console.log(walletBalance);
     expect(walletBalance.toNumber()).to.equal(0);
   });
 });
