@@ -3,19 +3,32 @@ import { expect } from 'chai';
 import { Contract } from 'ethers';
 import { ethers } from 'hardhat';
 
-const { provider, utils } = ethers;
+const INIT_OPCODE = '600a600c600039600a6000f3';
+const RUNTIME_CODE = '602a60805260206080f3';
+const CONTRACT_BYTECODE = `0x${INIT_OPCODE}${RUNTIME_CODE}`;
+const ABI = ['function whatIsTheMeaningOfLife() pure returns (uint)'];
 
 describe('MagicNumber', () => {
-  let owner: SignerWithAddress;
-  let user1: SignerWithAddress;
-  let user2: SignerWithAddress;
-  let attacker: SignerWithAddress;
   let contract: Contract;
   before(async () => {
-    [owner, user1, user2, attacker] = await ethers.getSigners();
+    const Factory = await ethers.getContractFactory('MagicNum');
+    contract = await Factory.deploy();
+    await contract.deployed();
   });
 
   it('attack', async () => {
-    expect(true).to.equal(false);
+    const Factory = new ethers.ContractFactory(
+      ABI,
+      CONTRACT_BYTECODE,
+      ethers.provider.getSigner()
+    );
+
+    const solutionContract = await Factory.deploy();
+    await solutionContract.deployed();
+
+    let tx = await contract.setSolver(solutionContract.address);
+    await tx.wait();
+
+    expect(await solutionContract.whatIsTheMeaningOfLife()).to.equal(42);
   });
 });
