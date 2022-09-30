@@ -2,42 +2,28 @@
 
 ## Index
 1. Hello Ethernaut
-2. Fallback
-3. Fallout
-4. CoinFlip
-5. Telephone
-6. Delegation
-7. Force
-8. Vault
-9. King
-10. Reentrance
-11. Elevator
-12. Privacy
-13. Gatekeeper One
-14. Gatekeeper Two
-15. Naught Coin
-16. Preservation
-17. Recovery
-18. Magic Number
-19. Alien Codex
-20. Denial
-21. Shop
-22. Dex One
-23. Dex Two
-24. Puzzle Wallet
-25. Motorbike
-26. Double Entry Point
-
-
-## 25 - Motorbike
-
-Ethernaut's motorbike has a brand new upgradeable engine design.
-
-Would you be able to ```selfdestruct``` its engine and make the motorbike unusable ?
-
-Things that might help:
-
-* [EIP-1967](https://eips.ethereum.org/EIPS/eip-1967)
-* [UUPS](https://forum.openzeppelin.com/t/uups-proxies-tutorial-solidity-javascript/7786) upgradeable pattern
-* [Initializable](https://github.com/OpenZeppelin/openzeppelin-upgrades/blob/master/packages/core/contracts/Initializable.sol
-) contract
+2. Fallback - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Fallback.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/02-Fallback.test.ts)
+3. Fallout - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Fallout.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/03-Fallout.test.ts)
+4. CoinFlip - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/CoinFlip.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/04-Conflip.test.ts)
+5. Telephone - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Telephone.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/05-Telephone.test.ts)
+6. Delegation - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Delegation.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/06-Delegation.test.ts)
+7. Force - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Force.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/07-Force.test.ts)
+8. Vault - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Vault.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/08-Vault.test.ts)
+9. King - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/King.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/09-King.test.ts)
+10. Reentrance - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Reentrance.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/10-Reentrance.test.ts)
+11. Elevator - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Elevator.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/11-Elevator.test.ts)
+12. Privacy - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Privacy.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/12-Privacy.test.ts)
+13. Gatekeeper One - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/GateKeeperOne.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/13-GateKeeperOne.test.ts)
+14. Gatekeeper Two - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/GateKeeperTwo.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/14-GateKeeperTwo.test.ts)
+15. Naught Coin - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/NaughtCoin.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/15-NaughtCoin.test.ts)
+16. Preservation - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Preservation.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/16-Preservation.test.ts)
+17. Recovery - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Recovery.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/17-Recovery.test.ts)
+18. Magic Number - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/MagicNumber.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/18-MagicNumber.test.ts)
+19. Alien Codex - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/AlienCodex.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/19-AlienCodex.test.ts)
+20. Denial - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Denial.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/20-Denial.test.ts)
+21. Shop - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Shop.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/21-Shop.test.ts)
+22. Dex One - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/DexOne.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/22-DexOne.test.ts)
+23. Dex Two - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/DexTwo.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/23-DexTwo.test.ts)
+24. Puzzle Wallet - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/PuzzleWallet.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/24-PuzzleWallet.test.ts)
+25. Motorbike - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/Motorbike.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/25-Motorbike.test.ts)
+26. Double Entry Point - [Contract](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/src/Challenges/DoubleEntryPoint.sol) - [Solution](https://github.com/nicobevilacqua/EthernautSolutions/blob/master/test/26-DoubleEntryPoint.test.ts)
